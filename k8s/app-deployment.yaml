@@ -17,9 +17,3 @@ spec:
           image: rafaeldemiranda/tech-challenge-fiap-pagamento:latest
           ports:
             - containerPort: 3000
-          env:
-            - name: JWT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: tech-challenge-pagamento
-                  key: jwt_secret

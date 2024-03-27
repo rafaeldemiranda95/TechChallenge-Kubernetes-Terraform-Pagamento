@@ -3,7 +3,6 @@ variable "DB_HOST" {
   type        = string
   default     = ""
 }
-
 variable "DB_USERNAME" {
   description = "Database Username"
   type        = string

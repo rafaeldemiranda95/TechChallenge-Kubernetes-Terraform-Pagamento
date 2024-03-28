@@ -1,4 +1,4 @@
-name: Tech Challenge - Deploy Infrastructure - GKE
+name: Tech Challenge - Pagamento - Deploy
 
 on:
   push:

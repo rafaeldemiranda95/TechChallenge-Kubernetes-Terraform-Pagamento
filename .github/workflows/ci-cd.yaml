@@ -44,11 +44,11 @@ jobs:
 
       - name: Get GKE credentials
         run: |
+          echo "${{ secrets.SA_KEY }}" > sa-key.json
+          gcloud auth activate-service-account --key-file=sa-key.json
           gcloud container clusters get-credentials tech-challenge-fiap-pagamento --zone us-central1 --project ${{ secrets.PROJECT_ID }}
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/_temp/_github_workflow/google_credentials.json
-        shell: bash
         working-directory: ./terraform
+        shell: bash
 
       - name: Deploy to Kubernetes
         run: |

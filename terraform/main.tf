@@ -3,12 +3,6 @@ provider "google" {
   credentials = file(var.credentials)
 }
 
-
-variable "credentials" {
-  description = "O caminho para o arquivo de credenciais da conta de serviço do Google Cloud."
-  default     = "sa-key.json"
-}
-
 resource "google_compute_network" "vpc" {
   name                    = "tech-challenge-pagamento-vpc"
   auto_create_subnetworks = false

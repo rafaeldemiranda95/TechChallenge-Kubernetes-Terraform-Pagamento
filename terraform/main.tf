@@ -1,21 +1,24 @@
+
 provider "google" {
-  project = "tech-challenge-pagamento"
-  region  = "us-centra1"
+  project = var.project_id
+  region  = var.region
 }
+
 resource "google_compute_network" "vpc" {
   name                    = "tech-challenge-pagamento-vpc"
   auto_create_subnetworks = false
 }
+
 resource "google_compute_subnetwork" "subnetwork" {
   name          = "tech-challenge-pagamento-subnetwork"
   ip_cidr_range = "10.0.1.0/24"
-  region        = "us-central1"
+  region        = var.region
   network       = google_compute_network.vpc.id
 }
 
 resource "google_container_cluster" "cluster" {
   name     = "tech-challenge-pagamento-cluster"
-  location = "us-central1"
+  location = var.region
 
   remove_default_node_pool = true
   initial_node_count       = 1
@@ -35,5 +38,4 @@ resource "google_container_cluster" "cluster" {
     }
   }
 }
-
-
+    

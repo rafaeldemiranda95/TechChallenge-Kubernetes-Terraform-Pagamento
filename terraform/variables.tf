@@ -1,33 +1,11 @@
-variable "DB_HOST" {
-  description = "Database Host"
-  type        = string
-  default     = ""
-}
-variable "DB_USERNAME" {
-  description = "Database Username"
-  type        = string
-  default     = ""
+variable "project_id" {
+  description = "O ID do projeto do Google Cloud."
 }
 
-variable "DB_PASSWORD" {
-  description = "Database Password"
-  type        = string
-  default     = ""
+variable "region" {
+  description = "A região do Google Cloud onde todos os recursos serão criados."
 }
 
-variable "DB_NAME" {
-  description = "Database Name"
-  type        = string
-  default     = ""
-}
-
-variable "JWT_SECRET" {
-  description = "JWT Secret Key"
-  type        = string
-  default     = ""
-}
-
-variable "key_name" {
-  description = "The key name to use for the instance"
-  default     = "your-default-key-name"
+variable "credentials" {
+  description = "O caminho para o arquivo de credenciais da conta de serviço do Google Cloud."
 }

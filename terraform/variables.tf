@@ -8,4 +8,5 @@ variable "region" {
 
 variable "credentials" {
   description = "O caminho para o arquivo de credenciais da conta de serviço do Google Cloud."
+  default     = "sa-key.json"
 }

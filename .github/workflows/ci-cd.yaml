@@ -26,34 +26,33 @@ jobs:
 
       - name: Create credentials file
         run: |
-          echo '${{ secrets.SA_KEY }}' > ./terraform/sa-key.json
+          echo '${{ secrets.SA_KEY }}' 
 
       - name: Terraform Init
         run: |
           terraform init
         working-directory: ./terraform
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SA_KEY }}/terraform/sa-key.json
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SA_KEY }}
 
       - name: Terraform Plan
         run: |
           run: terraform plan -var="project_id=${{ secrets.PROJECT_ID }}"
         working-directory: ./terraform
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SA_KEY }}/terraform/sa-key.json
-
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SA_KEY }}
       - name: Terraform Apply
         run: |
           terraform apply -auto-approve
         working-directory: ./terraform
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SA_KEY }}/terraform/sa-key.json
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SA_KEY }}
 
       - name: Get GKE credentials
         run: |
           gcloud container clusters get-credentials tech-challenge-fiap-pagamento --zone us-central1 --project ${{ secrets.PROJECT_ID }}
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SA_KEY }}/terraform/sa-key.json
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SA_KEY }}
 
       - name: Deploy to Kubernetes
         run: |

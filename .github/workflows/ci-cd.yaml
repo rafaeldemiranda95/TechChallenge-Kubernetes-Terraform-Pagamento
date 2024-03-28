@@ -31,7 +31,7 @@ jobs:
           GOOGLE_CREDENTIALS: ${{ secrets.SA_KEY }}
 
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -var="credentials=${{ secrets.SA_KEY }}"
         working-directory: ./terraform
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.SA_KEY }}

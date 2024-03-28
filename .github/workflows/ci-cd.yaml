@@ -22,10 +22,13 @@ jobs:
       - name: Install gke-gcloud-auth-plugin
         run: gcloud components install gke-gcloud-auth-plugin
 
-      - name: GKE credentials
-        run: |-
-          gcloud container clusters get-credentials tech-challenge-fiap-pagamento --zone us-central1 --project ${{ secrets.PROJECT_ID }}
+   
 
       - name: Deploy
         run: |-
           kubectl apply -f k8s/
+
+
+          - name: GKE credentials
+          run: |-
+            gcloud container clusters get-credentials tech-challenge-fiap-pagamento --zone us-central1 --project ${{ secrets.PROJECT_ID }}

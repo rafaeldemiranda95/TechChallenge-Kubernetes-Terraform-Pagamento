@@ -37,7 +37,7 @@ jobs:
 
       - name: Terraform Plan
         run: |
-          terraform plan
+          run: terraform plan -var="project_id=${{ secrets.PROJECT_ID }}"
         working-directory: ./terraform
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SA_KEY }}/terraform/sa-key.json

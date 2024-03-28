@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
-      
+
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.2.0
         with:
@@ -24,31 +24,36 @@ jobs:
         with:
           terraform_version: latest
 
+      - name: Create credentials file
+        run: |
+          echo '${{ secrets.SA_KEY }}' > ./terraform/sa-key.json
+
       - name: Terraform Init
-        run: terraform init
+        run: |
+          terraform init
         working-directory: ./terraform
         env:
-          GOOGLE_CREDENTIALS: ${{ secrets.SA_KEY }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SA_KEY }}/terraform/sa-key.json
 
       - name: Terraform Plan
-        run: terraform plan -var="credentials=${{ secrets.SA_KEY }}"
+        run: |
+          terraform plan
         working-directory: ./terraform
         env:
-          GOOGLE_CREDENTIALS: ${{ secrets.SA_KEY }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SA_KEY }}/terraform/sa-key.json
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: |
+          terraform apply -auto-approve
         working-directory: ./terraform
         env:
-          GOOGLE_CREDENTIALS: ${{ secrets.SA_KEY }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SA_KEY }}/terraform/sa-key.json
 
       - name: Get GKE credentials
         run: |
-          echo "${{ secrets.SA_KEY }}" > sa-key.json
-          gcloud auth activate-service-account --key-file=sa-key.json
           gcloud container clusters get-credentials tech-challenge-fiap-pagamento --zone us-central1 --project ${{ secrets.PROJECT_ID }}
-        working-directory: ./terraform
-        shell: bash
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.SA_KEY }}/terraform/sa-key.json
 
       - name: Deploy to Kubernetes
         run: |

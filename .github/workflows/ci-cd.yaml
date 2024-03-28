@@ -26,17 +26,31 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
+        working-directory: ./terraform
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.SA_KEY }}
 
       - name: Terraform Plan
         run: terraform plan
+        working-directory: ./terraform
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.SA_KEY }}
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
+        working-directory: ./terraform
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.SA_KEY }}
 
       - name: Get GKE credentials
         run: |
           gcloud container clusters get-credentials tech-challenge-fiap-pagamento --zone us-central1 --project ${{ secrets.PROJECT_ID }}
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/_temp/_github_workflow/google_credentials.json
+        shell: bash
+        working-directory: ./terraform
 
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f k8s/
+          kubectl apply -f ../k8s/
+        working-directory: ./terraform
